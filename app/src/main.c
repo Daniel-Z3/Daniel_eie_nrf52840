@@ -19,19 +19,21 @@ int main(void) {
   if (0 > LED_init()) {
     return 0;
   }
-  LED_blink(LED0,LED_1HZ);
   
-  LED_set(LED1,LED_ON);
 
-  uint8_t duty_cycle=0;
   while (1) {
-    LED_pwm(LED2,duty_cycle);
-    duty_cycle++;
-    if(duty_cycle==100){
-      LED_toggle(LED3);
-      duty_cycle=0;
-    }
-    //LED_toggle(LED2)
+    if(BTN_check_clear_pressed(BTN0)){
+      LED_toggle(LED0);
+      printk("Pressed button 0\n");
+    }   
+    if(BTN_check_pressed(BTN1)){
+      LED_toggle(LED1);
+      printk("Pressed button 1\n");
+    } 
+    if(BTN_check_clear_pressed(BTN2)){
+      BTN_clear_pressed(BTN1);
+      printk("Cleared BTN 1\n");
+    } 
     k_msleep(SLEEP_MS);
   }
   return 0;
